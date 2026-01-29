@@ -89,15 +89,30 @@ async def add_correlation_id(request: Request, call_next):
 
 @app.middleware("http")
 async def extract_swa_auth(request: Request, call_next):
-    """Extract user info from Azure Static Web Apps authentication headers.
+    """Extract user info from Azure Static Web Apps authentication headers or X-User-Email.
     
     Static Web Apps injects authentication info via X-MS-CLIENT-PRINCIPAL header.
+    Alternatively, accepts X-User-Email header from the frontend.
     https://learn.microsoft.com/azure/static-web-apps/user-information
     """
     import json
     import base64
     
-    # Extract client principal header
+    # Try X-User-Email header first (sent from frontend)
+    user_email_header = request.headers.get("X-User-Email")
+    if user_email_header:
+        request.state.user_claims = UserClaims(
+            oid="web-user",
+            name=user_email_header,
+            email=user_email_header,
+            roles=["Staff"],  # Default role
+            party_affiliation=None,
+            ba_code=None,
+        )
+        response = await call_next(request)
+        return response
+    
+    # Extract client principal header (direct from Static Web Apps)
     client_principal_header = request.headers.get("X-MS-CLIENT-PRINCIPAL")
     
     if client_principal_header:
