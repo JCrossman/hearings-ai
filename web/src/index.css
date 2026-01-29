@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --aer-blue: #003366;
+  --aer-teal: #00818a;
+  --aer-light-blue: #e6f2f5;
+  --aer-text: #333333;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom styles for search result highlights */
+.search-highlight {
+  background-color: rgba(0, 129, 138, 0.2);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.125rem;
+}
+
+/* Loading animation */
+.loading-dots::after {
+  content: '.';
+  animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60% { content: '...'; }
+  80%, 100% { content: ''; }
+}

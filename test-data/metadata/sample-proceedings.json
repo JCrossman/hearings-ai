@@ -1,0 +1,235 @@
+{
+  "proceedings": [
+    {
+      "proceeding_id": "449",
+      "title": "Summit Coal Ltd. Applications for Underground Mining",
+      "status": "active",
+      "applicant": {
+        "name": "Summit Coal Ltd.",
+        "role": "applicant",
+        "ba_code": "SCL001"
+      },
+      "interveners": [
+        { "name": "Crowsnest Pass Residents Association", "role": "intervener" },
+        { "name": "Oldman Watershed Council", "role": "intervener" },
+        { "name": "Piikani Nation", "role": "intervener" }
+      ],
+      "hearing_dates": {
+        "start": "2025-02-01",
+        "end": null
+      },
+      "application_numbers": ["1956789", "1956790"],
+      "timeline": [
+        { "date": "2024-09-15", "event": "Applications filed" },
+        { "date": "2024-10-01", "event": "Statements of concern received (12)" },
+        { "date": "2024-11-15", "event": "ADR unsuccessful" },
+        { "date": "2025-01-10", "event": "Notice of Hearing issued" },
+        { "date": "2025-01-20", "event": "Participation decisions released" },
+        { "date": "2025-02-01", "event": "Hearing commenced" }
+      ]
+    },
+    {
+      "proceeding_id": "444",
+      "title": "Northback Holdings Corporation Coal Exploration Applications",
+      "status": "active",
+      "applicant": {
+        "name": "Northback Holdings Corporation",
+        "role": "applicant",
+        "ba_code": "NHC001"
+      },
+      "interveners": [
+        { "name": "Alberta Wilderness Association", "role": "intervener" },
+        { "name": "Livingstone Landowners Group", "role": "intervener" },
+        { "name": "Stoney Nakoda Nation", "role": "intervener" }
+      ],
+      "hearing_dates": {
+        "start": "2024-06-10",
+        "end": "2024-06-21"
+      },
+      "application_numbers": ["1948547", "00497386"],
+      "timeline": [
+        { "date": "2023-08-01", "event": "Applications filed" },
+        { "date": "2023-09-15", "event": "Statements of concern received (23)" },
+        { "date": "2024-01-20", "event": "Notice of Hearing issued" },
+        { "date": "2024-06-10", "event": "Hearing commenced" },
+        { "date": "2024-06-21", "event": "Hearing concluded" }
+      ]
+    },
+    {
+      "proceeding_id": "434",
+      "title": "AlphaBow Energy Ltd. Regulatory Appeals",
+      "status": "closed",
+      "applicant": {
+        "name": "AlphaBow Energy Ltd.",
+        "role": "applicant",
+        "ba_code": "ABE001"
+      },
+      "interveners": [
+        { "name": "Pembina County Landowners", "role": "intervener" }
+      ],
+      "hearing_dates": {
+        "start": "2023-11-06",
+        "end": "2023-11-17"
+      },
+      "application_numbers": ["1927181"],
+      "regulatory_appeal_number": "1927181",
+      "decision": {
+        "abaer_citation": "2024-ABAER-001",
+        "date": "2024-02-15",
+        "outcome": "Appeals dismissed"
+      },
+      "timeline": [
+        { "date": "2023-05-01", "event": "Regulatory appeals filed" },
+        { "date": "2023-08-15", "event": "Notice of Hearing issued" },
+        { "date": "2023-11-06", "event": "Hearing commenced" },
+        { "date": "2023-11-17", "event": "Hearing concluded" },
+        { "date": "2024-02-15", "event": "Decision 2024-ABAER-001 released" }
+      ]
+    },
+    {
+      "proceeding_id": "432",
+      "title": "Qualico Developments West Ltd. Pipeline Act Reconsideration",
+      "status": "closed",
+      "applicant": {
+        "name": "Qualico Developments West Ltd.",
+        "role": "applicant",
+        "ba_code": "QDW001"
+      },
+      "interveners": [
+        { "name": "Plains Midstream Canada ULC", "role": "intervener" }
+      ],
+      "hearing_dates": {
+        "start": "2024-03-04",
+        "end": "2024-03-12"
+      },
+      "application_numbers": ["1943077"],
+      "decision": {
+        "abaer_citation": "2024-ABAER-007",
+        "date": "2024-06-20",
+        "outcome": "Application approved with conditions"
+      },
+      "timeline": [
+        { "date": "2022-10-01", "event": "Reconsideration application filed" },
+        { "date": "2023-06-15", "event": "Notice of Hearing issued" },
+        { "date": "2024-03-04", "event": "Hearing commenced" },
+        { "date": "2024-03-12", "event": "Hearing concluded" },
+        { "date": "2024-06-20", "event": "Decision 2024-ABAER-007 released" }
+      ]
+    }
+  ],
+  "sample_documents": [
+    {
+      "id": "doc-001",
+      "proceeding_id": "434",
+      "document_type": "decision",
+      "abaer_citation": "2024-ABAER-001",
+      "title": "Decision: AlphaBow Energy Ltd. Regulatory Appeals",
+      "confidentiality_level": "public",
+      "page_count": 87,
+      "source_url": "https://static.aer.ca/prd/documents/decisions/2024/2024-ABAER-001.pdf",
+      "parties": [
+        { "name": "AlphaBow Energy Ltd.", "role": "applicant", "ba_code": "ABE001" },
+        { "name": "Pembina County Landowners", "role": "intervener" }
+      ],
+      "regulatory_citations": [
+        { "type": "legislation", "reference": "REDA s. 34" },
+        { "type": "legislation", "reference": "REDA s. 36" },
+        { "type": "legislation", "reference": "OGCA s. 3" },
+        { "type": "directive", "reference": "Directive 056" },
+        { "type": "directive", "reference": "Directive 067" }
+      ]
+    },
+    {
+      "id": "doc-002",
+      "proceeding_id": "432",
+      "document_type": "transcript",
+      "title": "Proceeding 432 - Volume 4 - March 11, 2024",
+      "confidentiality_level": "public",
+      "page_count": 245,
+      "volume_number": 4,
+      "source_url": "https://static.aer.ca/aer/documents/applications/hearings/Proceeding-432-Vol-4-March-11-2024.pdf",
+      "parties": [
+        { "name": "Qualico Developments West Ltd.", "role": "applicant" },
+        { "name": "Plains Midstream Canada ULC", "role": "intervener" }
+      ]
+    },
+    {
+      "id": "doc-003",
+      "proceeding_id": "449",
+      "document_type": "evidence",
+      "title": "Environmental Impact Assessment - Summit Coal Underground Mine",
+      "confidentiality_level": "public",
+      "page_count": 156,
+      "parties": [
+        { "name": "Summit Coal Ltd.", "role": "applicant" }
+      ],
+      "regulatory_citations": [
+        { "type": "legislation", "reference": "EPEA s. 40" },
+        { "type": "legislation", "reference": "Water Act s. 36" },
+        { "type": "directive", "reference": "Directive 056 s. 2.1" }
+      ]
+    },
+    {
+      "id": "doc-004",
+      "proceeding_id": "449",
+      "document_type": "evidence",
+      "title": "Groundwater Baseline Study - Confidential Financial Appendix",
+      "confidentiality_level": "confidential",
+      "page_count": 45,
+      "parties": [
+        { "name": "Summit Coal Ltd.", "role": "applicant" }
+      ],
+      "confidentiality_reason": "Contains proprietary geological data and financial projections (s. 49 order granted)"
+    },
+    {
+      "id": "doc-005",
+      "proceeding_id": "444",
+      "document_type": "procedural",
+      "title": "Scheduling Order and Directions",
+      "confidentiality_level": "public",
+      "page_count": 8,
+      "source_url": "https://static.aer.ca/prd/documents/decisions/Participatory_Procedural/1948547_20240115.pdf",
+      "parties": [
+        { "name": "Northback Holdings Corporation", "role": "applicant" },
+        { "name": "Alberta Wilderness Association", "role": "intervener" },
+        { "name": "Livingstone Landowners Group", "role": "intervener" }
+      ]
+    },
+    {
+      "id": "doc-006",
+      "proceeding_id": "449",
+      "document_type": "notice",
+      "title": "Notice of Hearing - Summit Coal Applications",
+      "confidentiality_level": "public",
+      "page_count": 4,
+      "parties": []
+    }
+  ],
+  "test_queries": [
+    {
+      "query": "What evidence exists for groundwater contamination risks?",
+      "expected_document_types": ["evidence", "decision"],
+      "expected_citations": ["EPEA", "Water Act"]
+    },
+    {
+      "query": "What conditions did the panel impose on the coal exploration approval?",
+      "expected_document_types": ["decision"],
+      "expected_proceeding": "444"
+    },
+    {
+      "query": "Show me all transcript excerpts where groundwater monitoring was discussed",
+      "expected_document_types": ["transcript"],
+      "expected_terms": ["monitoring well", "baseline", "contamination"]
+    },
+    {
+      "query": "What are the Piikani Nation's concerns about the Summit Coal application?",
+      "expected_document_types": ["evidence", "transcript"],
+      "expected_proceeding": "449"
+    },
+    {
+      "query": "How has Directive 056 been applied in recent coal exploration hearings?",
+      "expected_document_types": ["decision", "procedural"],
+      "expected_citations": ["Directive 056"]
+    }
+  ]
+}
