@@ -4,6 +4,13 @@ All notable changes to the Hearings AI project will be documented in this file.
 
 ## [0.2.0] - 2026-01-29
 
+### 🛑 Services Shut Down
+- **Status**: ⏸️ Services shut down for overnight (2026-01-29 23:22 MST)
+- **API**: Ingress disabled (returns 404)
+- **Frontend**: Static Web App deleted (temporary)
+- **Reason**: Prevent unauthorized access overnight
+- **Documentation**: Added OPERATIONS.md with shutdown/startup procedures
+
 ### 🎉 Deployed to Production
 - Deployed API backend to Azure Container Apps (Canada Central) - v7
 - Deployed web frontend to Azure Static Web Apps  
@@ -58,6 +65,9 @@ All notable changes to the Hearings AI project will be documented in this file.
 - Two-tier authentication: Static Web Apps + API allowlist
 
 ### 📝 Documentation
+- **Added OPERATIONS.md**: Complete operational guide for shutdown/startup, deployment, monitoring, and troubleshooting
+- Updated README with shutdown/startup procedures
+- Updated README status to show services are offline
 - Updated README with authentication setup
 - Added ALLOWLIST.md for user management
 - Updated CHANGELOG with all recent changes

@@ -1,8 +1,8 @@
 # Hearings AI
 
-> **Status:** ✅ Deployed and running in production  
-> **Live URL:** https://lemon-river-0cd056d0f.4.azurestaticapps.net  
-> **API:** https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io
+> **Status**: ⏸️ Shut down for overnight  
+> **Live URL**: https://lemon-river-0cd056d0f.4.azurestaticapps.net (offline)  
+> **API**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io (ingress disabled)
 
 Semantic search and document understanding application for hearing preparation. Built with Python FastAPI, React TypeScript, and Azure AI services.
 
@@ -219,7 +219,49 @@ Set via environment variable or HTTP header for local development.
 - **Region**: Canada Central
 - **API Version**: v7 (latest)
 - **Search Index**: hearings-index (5,693 chunks from 54 PDFs)
+- **Status**: ⏸️ Shut down (2026-01-29 overnight)
 - **Deployed**: 2026-01-29
+
+### Shutdown & Startup Procedures
+
+**To shut down services overnight (prevent access & minimize costs):**
+```bash
+# Disable API ingress (makes API inaccessible)
+az containerapp ingress disable \
+  --name hearingsai-api \
+  --resource-group rg-hearingsai-dev
+
+# Delete Static Web App (temporary removal)
+az staticwebapp delete \
+  --name hearingsai-web \
+  --resource-group rg-hearingsai-dev \
+  --yes --no-wait
+```
+
+**To restore services:**
+```bash
+# Re-enable API access
+az containerapp ingress enable \
+  --name hearingsai-api \
+  --resource-group rg-hearingsai-dev \
+  --type external \
+  --target-port 8000 \
+  --transport auto
+
+# Recreate Static Web App (if deleted) - use Bicep
+cd infra
+az deployment group create \
+  -g rg-hearingsai-dev \
+  -f modules/staticwebapp.bicep \
+  -p name=hearingsai-web location=eastus2
+
+# Redeploy frontend
+cd ../web
+npm run build
+swa deploy dist --app-name hearingsai-web \
+  --resource-group rg-hearingsai-dev \
+  --env production --no-use-keychain
+```
 
 ### Deploy Updates
 ```bash
