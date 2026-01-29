@@ -3,12 +3,13 @@ import Layout from './components/Layout';
 import SearchBar from './components/SearchBar';
 import ResultsList from './components/ResultsList';
 import { useSearch } from './hooks/useSearch';
-import { DemoRole, DocumentType, DEMO_ROLES } from './types';
+import { DemoRole, DocumentType, DEMO_ROLES, SearchFilters } from './types';
 import { setCurrentRole } from './api/client';
 
 export default function App() {
   const [currentRole, setRole] = useState<DemoRole>('Staff');
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilters, setActiveFilters] = useState<SearchFilters>({});
   const { search, data, isLoading, error } = useSearch();
 
   const handleRoleChange = useCallback((role: DemoRole) => {
@@ -16,19 +17,33 @@ export default function App() {
     setCurrentRole(role);
     // Re-run search with new role if there's an active query
     if (searchQuery) {
-      search({ query: searchQuery });
+      search({ query: searchQuery, filters: activeFilters });
     }
-  }, [search, searchQuery]);
+  }, [search, searchQuery, activeFilters]);
 
   const handleSearch = useCallback((query: string, filters?: { documentTypes?: DocumentType[] }) => {
     setSearchQuery(query);
+    const newFilters = filters?.documentTypes ? { document_types: filters.documentTypes } : {};
+    setActiveFilters(newFilters);
     search({
       query,
-      filters: filters?.documentTypes ? { document_types: filters.documentTypes } : undefined,
+      filters: newFilters,
       top: 20,
       search_mode: 'hybrid',
     });
   }, [search]);
+
+  const handleFilterChange = useCallback((filters: SearchFilters) => {
+    setActiveFilters(filters);
+    if (searchQuery) {
+      search({
+        query: searchQuery,
+        filters,
+        top: 20,
+        search_mode: 'hybrid',
+      });
+    }
+  }, [search, searchQuery]);
 
   const roleInfo = DEMO_ROLES.find(r => r.id === currentRole)!;
 
@@ -65,7 +80,13 @@ export default function App() {
         )}
 
         {/* Results */}
-        <ResultsList response={data} isLoading={isLoading} query={searchQuery} />
+        <ResultsList 
+          response={data} 
+          isLoading={isLoading} 
+          query={searchQuery}
+          activeFilters={activeFilters}
+          onFilterChange={handleFilterChange}
+        />
 
         {/* Empty state when no search yet */}
         {!data && !isLoading && !error && (

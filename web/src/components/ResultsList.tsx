@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { SearchResult, SearchResponse, FacetValue } from '../types';
+import { SearchResult, SearchResponse, FacetValue, SearchFilters } from '../types';
 import { FileText, Scale, BookOpen, ChevronRight, ChevronDown, X } from 'lucide-react';
 
 interface ResultsListProps {
   response: SearchResponse | undefined;
   isLoading: boolean;
   query: string;
+  activeFilters: SearchFilters;
+  onFilterChange: (filters: SearchFilters) => void;
 }
 
-export default function ResultsList({ response, isLoading, query }: ResultsListProps) {
+export default function ResultsList({ response, isLoading, query, activeFilters, onFilterChange }: ResultsListProps) {
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -55,7 +57,11 @@ export default function ResultsList({ response, isLoading, query }: ResultsListP
 
       {/* Facets */}
       {response.facets && Object.keys(response.facets).length > 0 && (
-        <FacetPanel facets={response.facets} />
+        <FacetPanel 
+          facets={response.facets} 
+          activeFilters={activeFilters}
+          onFilterChange={onFilterChange}
+        />
       )}
 
       {/* Results list */}
@@ -225,11 +231,55 @@ function ResultCard({ result }: { result: SearchResult }) {
   );
 }
 
-function FacetPanel({ facets }: { facets: Record<string, FacetValue[]> }) {
+function FacetPanel({ facets, activeFilters, onFilterChange }: { 
+  facets: Record<string, FacetValue[]>;
+  activeFilters: SearchFilters;
+  onFilterChange: (filters: SearchFilters) => void;
+}) {
   const facetLabels: Record<string, string> = {
     document_type: 'Document Types',
     parties: 'Parties',
     regulatory_citations: 'Cited Legislation',
+  };
+
+  const handleFacetClick = (facetKey: string, value: string) => {
+    const newFilters = { ...activeFilters };
+    
+    if (facetKey === 'document_type') {
+      const current = newFilters.document_types || [];
+      if (current.includes(value as any)) {
+        newFilters.document_types = current.filter(v => v !== value);
+      } else {
+        newFilters.document_types = [...current, value as any];
+      }
+    } else if (facetKey === 'parties') {
+      const current = newFilters.parties || [];
+      if (current.includes(value)) {
+        newFilters.parties = current.filter(v => v !== value);
+      } else {
+        newFilters.parties = [...current, value];
+      }
+    } else if (facetKey === 'regulatory_citations') {
+      const current = newFilters.regulatory_citations || [];
+      if (current.includes(value)) {
+        newFilters.regulatory_citations = current.filter(v => v !== value);
+      } else {
+        newFilters.regulatory_citations = [...current, value];
+      }
+    }
+    
+    onFilterChange(newFilters);
+  };
+
+  const isActive = (facetKey: string, value: string): boolean => {
+    if (facetKey === 'document_type') {
+      return (activeFilters.document_types || []).includes(value as any);
+    } else if (facetKey === 'parties') {
+      return (activeFilters.parties || []).includes(value);
+    } else if (facetKey === 'regulatory_citations') {
+      return (activeFilters.regulatory_citations || []).includes(value);
+    }
+    return false;
   };
 
   return (
@@ -241,14 +291,22 @@ function FacetPanel({ facets }: { facets: Record<string, FacetValue[]> }) {
             <div key={key}>
               <p className="text-xs text-gray-500 mb-1">{facetLabels[key] || key}</p>
               <div className="flex flex-wrap gap-1">
-                {values.slice(0, 4).map((fv) => (
-                  <span
-                    key={fv.value}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-white text-gray-700 cursor-pointer hover:bg-gray-50"
-                  >
-                    {fv.value} <span className="text-gray-400 ml-1">({fv.count})</span>
-                  </span>
-                ))}
+                {values.slice(0, 4).map((fv) => {
+                  const active = isActive(key, fv.value);
+                  return (
+                    <button
+                      key={fv.value}
+                      onClick={() => handleFacetClick(key, fv.value)}
+                      className={`inline-flex items-center px-2 py-0.5 rounded text-xs transition-colors ${
+                        active 
+                          ? 'bg-aer-teal text-white font-medium' 
+                          : 'bg-white text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {fv.value} <span className={active ? 'text-white opacity-75 ml-1' : 'text-gray-400 ml-1'}>({fv.count})</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )
