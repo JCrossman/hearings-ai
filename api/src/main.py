@@ -87,6 +87,53 @@ async def add_correlation_id(request: Request, call_next):
     return response
 
 
+@app.middleware("http")
+async def extract_swa_auth(request: Request, call_next):
+    """Extract user info from Azure Static Web Apps authentication headers.
+    
+    Static Web Apps injects authentication info via X-MS-CLIENT-PRINCIPAL header.
+    https://learn.microsoft.com/azure/static-web-apps/user-information
+    """
+    import json
+    import base64
+    
+    # Extract client principal header
+    client_principal_header = request.headers.get("X-MS-CLIENT-PRINCIPAL")
+    
+    if client_principal_header:
+        try:
+            # Decode base64 header
+            client_principal_json = base64.b64decode(client_principal_header).decode("utf-8")
+            client_principal = json.loads(client_principal_json)
+            
+            # Extract user claims
+            user_id = client_principal.get("userId", "")
+            user_details = client_principal.get("userDetails", "")
+            claims = client_principal.get("claims", [])
+            
+            # Find email in claims
+            email = user_details
+            for claim in claims:
+                if claim.get("typ") in ["emails", "email", "preferred_username"]:
+                    email = claim.get("val", email)
+                    break
+            
+            # Create UserClaims and attach to request state
+            request.state.user_claims = UserClaims(
+                oid=user_id,
+                name=user_details,
+                email=email,
+                roles=["Staff"],  # Default role, can be customized based on claims
+                party_affiliation=None,
+                ba_code=None,
+            )
+        except Exception as e:
+            logger.warning("Failed to parse Static Web Apps auth header", error=str(e))
+    
+    response = await call_next(request)
+    return response
+
+
 # === Exception Handlers ===
 
 

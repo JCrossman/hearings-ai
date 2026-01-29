@@ -25,6 +25,32 @@ from src.models import ConfidentialityLevel, DocumentMetadata, Party, UserClaims
 security = HTTPBearer(auto_error=False)
 
 # Demo user profiles for role switching
+def _validate_user_access(email: str) -> None:
+    """Validate user email against allowlist.
+    
+    Raises HTTPException if user is not in the allowlist.
+    Allowlist is configured via ALLOWED_USERS environment variable (comma-separated emails).
+    """
+    allowed_users = os.environ.get("ALLOWED_USERS", "").strip()
+    
+    # If no allowlist configured, allow all users
+    if not allowed_users:
+        return
+    
+    # Parse comma-separated list and normalize
+    allowed_emails = [email.strip().lower() for email in allowed_users.split(",")]
+    
+    # Check if user is in allowlist
+    if email.lower() not in allowed_emails:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "code": "AUTH_002",
+                "message": "Access denied. Your account is not authorized to use this service.",
+            },
+        )
+
+
 DEMO_USERS = {
     "Hearing_Panel": UserClaims(
         oid="demo-panel-001",
@@ -73,20 +99,26 @@ async def get_current_user(
     """
     # Check for demo mode via header
     if x_demo_role and x_demo_role in DEMO_USERS:
-        return DEMO_USERS[x_demo_role]
+        user = DEMO_USERS[x_demo_role]
+        _validate_user_access(user.email)
+        return user
     
     # Check for demo mode via environment (for development)
     env_demo_role = os.environ.get("DEMO_ROLE")
     if env_demo_role and env_demo_role in DEMO_USERS:
-        return DEMO_USERS[env_demo_role]
+        user = DEMO_USERS[env_demo_role]
+        _validate_user_access(user.email)
+        return user
     
-    # Check request state (set by middleware)
+    # Check request state (set by middleware from Static Web Apps auth)
     if hasattr(request.state, "user_claims"):
-        return request.state.user_claims
+        user = request.state.user_claims
+        _validate_user_access(user.email)
+        return user
     
     # If no auth provided and not in demo mode, default to Staff for dev
     if os.environ.get("ENVIRONMENT", "development") == "development":
-        return DEMO_USERS["AER_Staff"]
+        return DEMO_USERS["Staff"]
     
     # Production: require valid credentials
     if not credentials:
@@ -97,7 +129,7 @@ async def get_current_user(
     
     # TODO: Implement actual JWT validation with azure-identity
     # For now, return staff user
-    return DEMO_USERS["AER_Staff"]
+    return DEMO_USERS["Staff"]
 
 
 def can_access_document(user_claims: UserClaims, document: DocumentMetadata) -> bool:
