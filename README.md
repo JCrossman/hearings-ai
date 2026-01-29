@@ -1,8 +1,8 @@
 # Hearings AI
 
-> **Status**: ⏸️ Shut down for overnight  
-> **Live URL**: https://lemon-river-0cd056d0f.4.azurestaticapps.net (offline)  
-> **API**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io (ingress disabled)
+> **Status**: ✅ Running in production  
+> **Live URL**: https://mango-sand-01a535f0f.6.azurestaticapps.net  
+> **API**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io
 
 Semantic search and document understanding application for hearing preparation. Built with Python FastAPI, React TypeScript, and Azure AI services.
 
@@ -219,7 +219,9 @@ Set via environment variable or HTTP header for local development.
 - **Region**: Canada Central
 - **API Version**: v7 (latest)
 - **Search Index**: hearings-index (5,693 chunks from 54 PDFs)
-- **Status**: ⏸️ Shut down (2026-01-29 overnight)
+- **Status**: ✅ Running (restarted 2026-01-29 07:00 MST)
+- **Frontend URL**: https://mango-sand-01a535f0f.6.azurestaticapps.net
+- **API Scaling**: min=1, max=3 (always-on)
 - **Deployed**: 2026-01-29
 
 ### Shutdown & Startup Procedures

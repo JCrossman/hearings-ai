@@ -4,8 +4,15 @@ All notable changes to the Hearings AI project will be documented in this file.
 
 ## [0.2.0] - 2026-01-29
 
-### 🛑 Services Shut Down
-- **Status**: ⏸️ Services shut down for overnight (2026-01-29 23:22 MST)
+### 🔄 Services Restarted (2026-01-29 07:00 MST)
+- **Status**: ✅ Services running in production
+- **API**: Ingress re-enabled, scaled to min=1 (always-on)
+- **Frontend**: Static Web App recreated and redeployed
+- **New Frontend URL**: https://mango-sand-01a535f0f.6.azurestaticapps.net
+- **Note**: Old URL (lemon-river-0cd056d0f...) no longer valid
+
+### 🛑 Services Shut Down (2026-01-29 23:22 MST)
+- **Status**: ⏸️ Services shut down for overnight
 - **API**: Ingress disabled (returns 404)
 - **Frontend**: Static Web App deleted (temporary)
 - **Reason**: Prevent unauthorized access overnight

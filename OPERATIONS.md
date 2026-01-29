@@ -4,9 +4,14 @@ This document covers day-to-day operational tasks for the Hearings AI applicatio
 
 ## Service Status
 
-**Current State**: ⏸️ Shut down for overnight (2026-01-29)
+**Current State**: ✅ Running in production (2026-01-29 07:00 MST)
 
-### Quick Status Check
+**URLs:**
+- **Frontend**: https://mango-sand-01a535f0f.6.azurestaticapps.net
+- **API**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io
+- **API Docs**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io/docs
+
+**Scaling**: min=1, max=3 (always-on, no cold starts)
 ```bash
 # Check API status
 az containerapp show \
@@ -333,10 +338,13 @@ az group delete \
 
 ## Service URLs
 
-- **Production Web**: https://lemon-river-0cd056d0f.4.azurestaticapps.net
+- **Production Web**: https://mango-sand-01a535f0f.6.azurestaticapps.net
 - **API**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io
 - **API Docs**: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azurecontainerapps.io/docs
 - **GitHub**: https://github.com/JCrossman/hearings-ai
+
+**Note**: Frontend URL changed on 2026-01-29 after overnight shutdown/restart.
+Old URL (lemon-river-0cd056d0f...) is no longer valid.
 
 ---
 
