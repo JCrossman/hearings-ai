@@ -128,6 +128,25 @@ function ResultCard({ result }: { result: SearchResult }) {
               <p className="line-clamp-3">{result.snippet}</p>
             </div>
 
+            {/* Parties */}
+            {result.parties && result.parties.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {result.parties.slice(0, 3).map((party, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700 border border-blue-200"
+                  >
+                    👥 {party}
+                  </span>
+                ))}
+                {result.parties.length > 3 && (
+                  <span className="text-xs text-gray-400">
+                    +{result.parties.length - 3} more parties
+                  </span>
+                )}
+              </div>
+            )}
+
             {/* Regulatory citations */}
             {result.regulatory_citations && result.regulatory_citations.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-2">

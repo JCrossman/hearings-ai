@@ -220,6 +220,7 @@ def search_documents(
             page_number=result.get("pageNumber", 1),
             paragraph_number=result.get("paragraphNumber"),
             citation_ref=citation_ref,
+            parties=result.get("parties", []),
             regulatory_citations=result.get("regulatoryCitations", []),
         ))
     

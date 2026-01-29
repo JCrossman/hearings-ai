@@ -156,6 +156,7 @@ class SearchResult(BaseModel):
     page_number: int
     paragraph_number: Optional[str] = None  # e.g., "[156]"
     citation_ref: str  # Full citation: "Proceeding 449, Exhibit 12.01, p.47, ¶156"
+    parties: list[str] = []
     regulatory_citations: list[str] = []
 
 

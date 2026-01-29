@@ -31,6 +31,7 @@ export interface SearchResult {
   page_number: number;
   paragraph_number: string | null;
   citation_ref: string;
+  parties: string[];
   regulatory_citations: string[];
 }
 

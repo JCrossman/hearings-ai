@@ -9,18 +9,28 @@ Semantic search and document understanding application for hearing preparation. 
 ## 🎯 What's Implemented
 
 ### ✅ Completed Features
-- **Authentication & Authorization**: Role-based access control (Staff, Hearing Panel, Intervener, Public)
-- **Semantic Search**: Hybrid vector + keyword search across hearing documents
+- **Authentication & Authorization**: 
+  - Azure Static Web Apps authentication (GitHub/Microsoft login)
+  - Email-based allowlist for access control
+  - Role-based access control (Staff, Hearing Panel, Intervener, Public)
+- **Search Index**: 
+  - 5,693 document chunks indexed from 54 real PDF documents
+  - Hybrid vector + keyword search with semantic ranking
+  - Full faceting support (document types, parties, regulatory citations)
+- **Search Interface**:
+  - Interactive Quick Filters with toggle behavior
+  - Real-time search results with relevance scoring
+  - Citation formatting with page and paragraph numbers
+  - Faceted filtering by document type, parties, and legislation
 - **Document Security**: Confidentiality filtering (Public, Protected A, Confidential)
-- **Search Service**: Full-text and vector similarity search with citation formatting
-- **Web Interface**: React TypeScript frontend with role switching for demo
+- **Web Interface**: React TypeScript frontend with modern UI
 - **Azure Infrastructure**: Deployed to production with Container Apps, Static Web Apps, AI Search
 - **API Documentation**: OpenAPI/Swagger at `/docs`
 
 ### 🚧 Planned Features (Not Yet Implemented)
 - Evidence retrieval with context windows
 - Document understanding (summarization, entity extraction)
-- Document ingestion pipeline
+- Party metadata population in search results
 - Proceeding overview pages
 - Azure Cosmos DB integration (infrastructure ready, not connected)
 
@@ -207,23 +217,28 @@ Set via environment variable or HTTP header for local development.
 - **Environment**: Production (dev)
 - **Resource Group**: rg-hearingsai-dev
 - **Region**: Canada Central
-- **API Version**: v4 (latest)
+- **API Version**: v7 (latest)
+- **Search Index**: hearings-index (5,693 chunks from 54 PDFs)
 - **Deployed**: 2026-01-29
 
 ### Deploy Updates
 ```bash
-# Build and push API
-cd api
-az acr build --registry hearingsaiacr --image hearingsai-api:v5 .
+# Build and push API (cloud-based build)
+az acr build --registry hearingsaiacr \
+  --image hearingsai-api:v8 \
+  --file api/Dockerfile api/ \
+  --platform linux/amd64
 
 # Update Container App
 az containerapp update -n hearingsai-api -g rg-hearingsai-dev \
-  --image hearingsaiacr.azurecr.io/hearingsai-api:v5
+  --image hearingsaiacr.azurecr.io/hearingsai-api:v8
 
 # Deploy Web
 cd web
 npm run build
-swa deploy --env production
+swa deploy dist --app-name hearingsai-web \
+  --resource-group rg-hearingsai-dev \
+  --env production --no-use-keychain
 ```
 
 ## API Endpoints
@@ -244,14 +259,17 @@ Full API docs: https://hearingsai-api.lemonground-4dbaf9d3.canadacentral.azureco
 
 **Phase 1: Foundation** ✅ Complete
 - Infrastructure provisioned
-- Authentication & authorization
+- Authentication & authorization with allowlist
 - Search service implemented
 - Web interface deployed
+- 54 real PDFs indexed (5,693 chunks)
 
 **Phase 2: Core Features** 🚧 In Progress
-- Document ingestion pipeline
-- Evidence retrieval with context
-- Document understanding (AI analysis)
+- ✅ Interactive search filters (document type, parties, legislation)
+- ✅ Search index population with real data
+- 🚧 Party metadata extraction and display
+- 📋 Evidence retrieval with context
+- 📋 Document understanding (AI analysis)
 
 **Phase 3: Enhancement** 📋 Planned
 - Proceeding overview pages
